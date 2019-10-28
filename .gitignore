@@ -126,5 +126,7 @@ cmake-build-*/
 *.iws
 
 .idea
-
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
 # End of https://www.gitignore.io/api/django,pycharm
