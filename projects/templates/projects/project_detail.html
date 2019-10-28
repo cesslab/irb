@@ -1,0 +1,6 @@
+<h2>Project: {{ project.name }}</h2>
+<ul>
+    {% for relationship in project.relationships.all %}
+      <li>{{ relationship.researcher.user.full_name }} ({{ relationship.role_label }})</li>
+    {% endfor %}
+</ul>
