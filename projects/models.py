@@ -22,7 +22,7 @@ class Project(models.Model):
         return self.name
 
 
-class ResearcherProjectRelationship(models.Model):
+class ResearchGroup(models.Model):
     PRIMARY_INVESTIGATOR = 1
     RESEARCH_ASSISTANT = 2
 
@@ -32,8 +32,8 @@ class ResearcherProjectRelationship(models.Model):
     )
 
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='relationships')
-    researcher = models.ForeignKey(Researcher, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='research_group')
+    researcher = models.ForeignKey(Researcher, on_delete=models.CASCADE, related_name='research_group')
 
     def role_label(self):
         return self.ROLE_CHOICES[self.role-1][1]
