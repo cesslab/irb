@@ -11,12 +11,12 @@ class Researcher(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    previous_clearance = models.BooleanField()
-    previous_protocol_number = models.CharField(max_length=255)
-    has_deception = models.BooleanField()
-    has_grant_application = models.BooleanField()
-    grant_agency = models.CharField(max_length=255)
-    grant_release_date = models.DateField()
+    previous_clearance = models.BooleanField(default=False)
+    previous_protocol_number = models.CharField(max_length=255, blank=True)
+    has_deception = models.BooleanField(default=False)
+    has_grant_application = models.BooleanField(default=False)
+    grant_agency = models.CharField(max_length=255, blank=True)
+    grant_release_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name

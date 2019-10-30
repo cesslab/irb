@@ -1,7 +1,9 @@
-from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, render
 
 from .models import Project
+from .forms import ProjectForm
 
 
 class ProjectListView(ListView):
@@ -15,5 +17,9 @@ class ProjectDetailView(DetailView):
         return render(request, 'projects/project_detail.html', context)
 
 
+class ProjectCreateView(CreateView):
+    template_name = 'projects/project_form.html'
+    form_class = ProjectForm
 
-
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'id': self.object.id})
