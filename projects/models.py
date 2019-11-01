@@ -20,7 +20,7 @@ class Project(models.Model):
         return self.name
 
 
-class ProjectIRBProfile(model.Model):
+class ProjectIRBProfile(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     previous_clearance = models.BooleanField(default=False)
     previous_protocol_number = models.CharField(max_length=255, blank=True)
