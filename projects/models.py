@@ -9,17 +9,25 @@ class Researcher(models.Model):
         return str(self.user)
 
 
+class ResearcherIRBProfile(models.Model):
+    researcher = models.ForeignKey(Researcher, on_delete=models.CASCADE)
+
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class ProjectIRBProfile(model.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     previous_clearance = models.BooleanField(default=False)
     previous_protocol_number = models.CharField(max_length=255, blank=True)
     has_deception = models.BooleanField(default=False)
     has_grant_application = models.BooleanField(default=False)
     grant_agency = models.CharField(max_length=255, blank=True)
     grant_release_date = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class ResearchGroup(models.Model):
