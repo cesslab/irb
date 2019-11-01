@@ -3,14 +3,16 @@ from users.models import CustomUser
 
 
 class Researcher(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, blank=True, null=True)
+    fullname = models.CharField(max_length=255)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.fullname)
 
 
 class ResearcherIRBProfile(models.Model):
-    researcher = models.ForeignKey(Researcher, on_delete=models.CASCADE)
+    researcher = models.OneToOneField(Researcher, related_name='irb_profile', on_delete=models.CASCADE)
+    has_irb_certification = models.BooleanField()
 
 
 class Project(models.Model):
@@ -21,7 +23,7 @@ class Project(models.Model):
 
 
 class ProjectIRBProfile(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='irb_profile', on_delete=models.CASCADE)
     previous_clearance = models.BooleanField(default=False)
     previous_protocol_number = models.CharField(max_length=255, blank=True)
     has_deception = models.BooleanField(default=False)
