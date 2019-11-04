@@ -5,7 +5,7 @@
     <h3>Researcher Group</h3>
   <ul>
       {% for relationship in project.research_group.all %}
-        <li>{{ relationship.researcher.user.full_name }} ({{ relationship.role_label }})</li>
+        <li>{{ relationship.researcher.name }} ({{ relationship.role_label }})</li>
       {% endfor %}
   </ul>
 </div>
