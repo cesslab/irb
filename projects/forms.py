@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, inlineformset_factory
 from .models import Project, Researcher
 
 
@@ -42,3 +42,12 @@ class ProjectForm(ModelForm):
         project.has_grant_application = self.cleaned_data['has_grant_application']
         project.grant_agency = self.cleaned_data['grant_agency']
         project.grant_release_date = self.cleaned_data['grant_release_date']
+
+
+class ResearcherForm(ModelForm):
+    class Meta:
+        model = Researcher
+        exclude = ('is_certified',)
+
+
+ResearcherModelFormSet = inlineformset_factory(Project, Researcher, form=ResearcherForm, fields=['name', 'role'], extra=1, can_delete=True)
