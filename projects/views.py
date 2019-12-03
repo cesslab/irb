@@ -2,6 +2,8 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, render
 
+from django.db import transaction
+
 from .models import Project
 from .forms import ProjectForm, ResearcherModelFormSet
 
@@ -29,6 +31,17 @@ class ProjectCreateView(CreateView):
         else:
             data['researchers'] = ResearcherModelFormSet()
         return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        researchers = context['researchers']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if researchers.is_valid():
+                researchers.instance = self.object
+                researchers.save()
+            return super(ProjectCreateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'id': self.object.id})
