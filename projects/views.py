@@ -1,6 +1,7 @@
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth import get_user_model
 
 from django.db import transaction
 
@@ -22,7 +23,7 @@ class ProjectDetailView(DetailView):
 class ProjectResearcherCreateView(CreateView):
     model = Project
     fields = ['name']
-    template_name = 'projects/project_form.html'
+    template_name = 'projects/project_researchers_create.html'
     success_url = reverse_lazy('project_list')
 
     def get_context_data(self, **kwargs):
@@ -37,12 +38,14 @@ class ProjectResearcherCreateView(CreateView):
         context = self.get_context_data()
         researchers = context['researchers']
         with transaction.atomic():
-            self.object = form.save()
+            self.object = form.save(commit=False)
+            self.object.creator = self.request.user
+            self.object.save()
 
             if researchers.is_valid():
                 researchers.instance = self.object
                 researchers.save()
-            return super(ProjectCreateView, self).form_valid(form)
+            return super(ProjectResearcherCreateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'id': self.object.id})
