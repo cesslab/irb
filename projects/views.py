@@ -1,11 +1,11 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, render
 
 from django.db import transaction
 
 from .models import Project
-from .forms import ProjectForm, ResearcherModelFormSet
+from .forms import ResearcherModelFormSet
 
 
 class ProjectListView(ListView):
@@ -19,13 +19,14 @@ class ProjectDetailView(DetailView):
         return render(request, 'projects/project_detail.html', context)
 
 
-class ProjectCreateView(CreateView):
+class ProjectResearcherCreateView(CreateView):
+    model = Project
+    fields = ['name']
     template_name = 'projects/project_form.html'
-    form_class = ProjectForm
-    success_url = None
+    success_url = reverse_lazy('project_list')
 
     def get_context_data(self, **kwargs):
-        data = super(ProjectCreateView, self).get_context_data(**kwargs)
+        data = super(ProjectResearcherCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
             data['researchers'] = ResearcherModelFormSet(self.request.POST)
         else:
