@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Create A Project{% endblock %}
 
 {% load crispy_forms_tags %}
@@ -76,4 +77,16 @@
     </div>
       <input type="submit" class="btn btn-primary" value="Create Project">
   </form>
+{% endblock %}
+
+{% block scripts %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="{% static 'formset/jquery.formset.js' %}"></script>
+  <script type="text/javascript">
+    $('.formset_row').formset({
+      addText: 'add family member',
+      deleteText: 'remove',
+      prefix: 'familymember_set'
+    });
+  </script>
 {% endblock %}
