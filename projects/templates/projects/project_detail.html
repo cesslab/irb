@@ -1,11 +1,12 @@
 <div>
   <h2>Project: {{ project.name }}</h2>
+    <h2>Owner: {{ project.creator.username }}</h2>
 </div>
 <div>
     <h3>Researcher Group</h3>
   <ul>
-      {% for relationship in project.research_group.all %}
-        <li>{{ relationship.researcher.name }} ({{ relationship.role_label }})</li>
+      {% for researcher in project.researcher_set.all %}
+        <li>{{ researcher.name }} ({{ researcher.role_label }})</li>
       {% endfor %}
   </ul>
 </div>
