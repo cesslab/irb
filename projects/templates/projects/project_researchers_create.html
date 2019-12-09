@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'dashboard/base.html' %}
 {% block title %}Create A Project{% endblock %}
 
 {% load crispy_forms_tags %}
 
-{% block container %}
+{% block content %}
   <h1 class="h2">Create A Project</h1>
   <form method="post" action="">
       {% csrf_token %}
