@@ -25,10 +25,8 @@ SECRET_KEY = 'b4=^1q73x#%p&*9^mu^(sq#qd*2^&7!$vjvl%stzseuwqrf@sf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,12 +40,18 @@ INSTALLED_APPS = [
     'users',
     'projects',
     'django_extensions',
-    'allauth',
-    'allauth.account',
+    # Crispy forms
     'crispy_forms',
 ]
 
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+
+
 MIDDLEWARE = [
+    # Debug Toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # --
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,9 +118,6 @@ SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 
@@ -142,3 +143,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Debug Toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_REDIRECT_URL = 'project_list'
