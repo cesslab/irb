@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'users',
     'projects',
+    'accounts',
     'django_extensions',
     # Crispy forms
     'crispy_forms',
