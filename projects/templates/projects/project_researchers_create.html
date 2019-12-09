@@ -1,10 +1,10 @@
 {% extends 'dashboard/base.html' %}
-{% block title %}Create A Project{% endblock %}
+{% block title %}New Project{% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <h1 class="h2">Create A Project</h1>
+  <h1 class="h2">New Project</h1>
   <form method="post" action="">
       {% csrf_token %}
     <div class="form-group">
