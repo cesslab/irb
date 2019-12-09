@@ -1,10 +1,22 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block content %}
-  <h2>Projects</h2>
-  <ul>
-      {% for project in object_list %}
-        <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
-      {% endfor %}
-  </ul>
+  <h2>Projects <a class="btn btn-primary" href="{% url 'project_create' %}">New Project</a></h2>
+  <table class="table">
+    <thead><tr><th>Name</th><th>Creator</th><th>Collaborators</th></tr></thead>
+    <tbody>
+    {% for project in object_list %}
+      <tr>
+        <td><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></td>
+        <td>{{ project.creator.username }}</td>
+        <td>
+          {% for researcher in project.researcher_set.all  %}
+            {{ researcher.name }} ({{ researcher.role_label }}){% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+
+    </table>
 {% endblock %}
