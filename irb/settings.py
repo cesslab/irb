@@ -153,3 +153,5 @@ INTERNAL_IPS = [
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = 'project_list'
+
+CRISPY_TEMPLATE_PACK="bootstrap4"
