@@ -11,6 +11,8 @@ django-debug-toolbar = "*"
 [packages]
 django = "*"
 django-crispy-forms = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
