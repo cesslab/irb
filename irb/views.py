@@ -1,10 +1,11 @@
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 
 def home(request):
     if request.user.is_authenticated:
-        redirect('projects:project_list')
+        return redirect(reverse('projects:project_list'))
     else:
-        render(request, 'home.html')
+        return render(request, 'home.html')
 
