@@ -12,7 +12,8 @@
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+  {% block styles %}
+  {% endblock %}
 </head>
 
 <body>
@@ -35,7 +36,7 @@
             <a class="nav-link" href="{% url 'login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
