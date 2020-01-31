@@ -1,6 +1,7 @@
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 
 from django.db import transaction
@@ -9,20 +10,20 @@ from .models import Project
 from .forms import ResearcherModelFormSet
 
 
-class ProjectListView(ListView):
+class ProjectListView(LoginRequiredMixin, ListView):
     queryset = Project.objects.all()
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *agrs, **kwargs):
         project = get_object_or_404(Project, id=kwargs['id'])
         context = {'project': project}
         return render(request, 'projects/project_detail.html', context)
 
 
-class ProjectResearcherCreateView(CreateView):
+class ProjectResearcherCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['name']
+    fields = ['name', 'description']
     template_name = 'projects/project_researchers_create.html'
     success_url = reverse_lazy('project_list')
 
