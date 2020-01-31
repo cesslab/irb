@@ -39,7 +39,6 @@ class ProjectResearcherCreateView(CreateView):
         researchers = context['researchers']
         with transaction.atomic():
             self.object = form.save(commit=False)
-            self.object.creator = self.request.user
             self.object.save()
 
             if researchers.is_valid():
@@ -48,4 +47,4 @@ class ProjectResearcherCreateView(CreateView):
             return super(ProjectResearcherCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('project_detail', kwargs={'id': self.object.id})
+        return reverse('projects:project_detail', kwargs={'id': self.object.id})

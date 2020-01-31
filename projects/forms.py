@@ -1,13 +1,13 @@
 from django import forms
 from django.forms import ModelForm, inlineformset_factory
-from .models import Project, Researcher
+from .models import Project, ProjectResearcher
 
 
 class ResearcherForm(ModelForm):
     class Meta:
-        model = Researcher
+        model = ProjectResearcher
         exclude = ('is_certified',)
 
 
 ResearcherModelFormSet = inlineformset_factory(
-    Project, Researcher, form=ResearcherForm, extra=1, can_delete=True)
+    Project, ProjectResearcher, form=ResearcherForm, extra=1, can_delete=True)

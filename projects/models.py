@@ -4,7 +4,6 @@ from accounts.models import CustomUser
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     previous_clearance = models.BooleanField(default=False)
     previous_protocol_number = models.CharField(max_length=255, blank=True)
     has_deception = models.BooleanField(default=False)
@@ -13,10 +12,10 @@ class Project(models.Model):
     grant_release_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'name: {self.name}'
 
 
-class Researcher(models.Model):
+class ProjectResearcher(models.Model):
     PRIMARY_INVESTIGATOR = 1
     RESEARCH_ASSISTANT = 2
 
@@ -25,8 +24,8 @@ class Researcher(models.Model):
         (RESEARCH_ASSISTANT, 'RA'),
     )
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='researchers')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='researchers')
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
     is_certified = models.BooleanField(default=False)
 
@@ -34,7 +33,7 @@ class Researcher(models.Model):
         return self.ROLE_CHOICES[self.role-1][1]
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.role_label())
+        return f'User: {self.user.email}, Role: {self.role_label()}'
 
 
 
