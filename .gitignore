@@ -130,3 +130,4 @@ cmake-build-*/
 .ipynb_checkpoints/
 *.ipynb
 # End of https://www.gitignore.io/api/django,pycharm
+.envrc
