@@ -14,6 +14,8 @@ django = "*"
 django-crispy-forms = "*"
 whitenoise = "*"
 gunicorn = "*"
+boto3 = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.7"
