@@ -4,7 +4,7 @@ from accounts.models import CustomUser
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    instructions = models.FileField(upload_to='')
+    instructions = models.FileField(upload_to='instructions/')
     description = models.TextField()
     previous_clearance = models.BooleanField(default=False)
     previous_protocol_number = models.CharField(max_length=255, blank=True)
