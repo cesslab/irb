@@ -3,7 +3,7 @@
 {% block content %}
   <h2>Projects <a class="btn btn-primary" href="{% url 'projects:project_create' %}">New Project</a></h2>
   <table class="table">
-    <thead><tr><th>Name</th><th>Collaborators</th></tr></thead>
+    <thead><tr><th>Name</th><th>Collaborators</th><th>Instructions</th></tr></thead>
     <tbody>
     {% for project in object_list %}
       <tr>
@@ -12,6 +12,9 @@
           {% for researcher in project.researchers.all  %}
             {{ researcher.user.email }} ({{ researcher.role_label }}){% if not forloop.last %}, {% endif %}
           {% endfor %}
+        </td>
+        <td>
+          <a href="{{ project.instructions.url }}" class="btn btn-primary btn-sm" target="_blank">Download</a>
         </td>
       </tr>
     {% endfor %}
