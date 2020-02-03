@@ -1,20 +1,20 @@
 {% extends 'dashboard/base.html' %}
 {% load crispy_forms_tags %}
+{% load crispy_forms_field %}
 {% load static %}
 
 {% block title %}New Project{% endblock %}
 
 {% block content %}
   <h1 class="h2">New Project</h1>
-  <form method="post" action="">
+  <form method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
-    {% crispy form %}
-
+      {% crispy form helper %}
     <div>
       <h3>Add Researchers</h3>
       <table>
-        {{ researchers.management_form }}
-        {% for form in researchers.forms %}
+        {{ project_researcher_formset.management_form }}
+        {% for form in project_researcher_formset.forms %}
           {% if forloop.first %}
               <thead>
                 <tr>
@@ -34,19 +34,22 @@
                 {% endif %}
 
                 {{ field.errors.as_ul }}
-                {{ field }}
+                {{ field|as_crispy_field }}
               </td>
             {% endfor %}
           </tr>
         {% endfor %}
       </table>
     </div>
+    <div class="pt-10">
       <input type="submit" class="btn btn-primary" value="Create Project">
+    </div>
   </form>
 {% endblock %}
 
 {% block scripts %}
   <script src="{% static 'formset/jquery.formset.js' %}"></script>
+{#  <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>#}
     <script>
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {
@@ -57,7 +60,9 @@
   <script type="text/javascript">
     $('.formset_row').formset({
       addText: 'add researcher',
+      addCssClass: 'add-row btn btn-success btn-block mb-10',
       deleteText: 'remove',
+      deleteCssClass: 'btn btn-danger',
       prefix: 'researchers'
     });
   </script>

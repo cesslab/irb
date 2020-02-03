@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 
 from .models import Project
-from .forms import ResearcherModelFormSet
+from .forms import ProjectResearcherFormSet, ResearcherFormSetHelper, ProjectForm
 
 
 class ProjectListView(LoginRequiredMixin, ListView):
@@ -23,28 +23,31 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
 class ProjectResearcherCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['name', 'description', 'instructions']
+    # fields = ['name', 'description', 'instructions']
     template_name = 'projects/project_researchers_create.html'
     success_url = reverse_lazy('project_list')
+    form_class = ProjectForm
 
     def get_context_data(self, **kwargs):
         data = super(ProjectResearcherCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            data['researchers'] = ResearcherModelFormSet(self.request.POST)
+            data['project_researcher_formset'] = ProjectResearcherFormSet(self.request.POST)
         else:
-            data['researchers'] = ResearcherModelFormSet()
+            data['project_researcher_formset'] = ProjectResearcherFormSet()
+
+        data['helper'] = ResearcherFormSetHelper()
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
-        researchers = context['researchers']
+        formset = context['project_researcher_formset']
         with transaction.atomic():
             self.object = form.save(commit=False)
             self.object.save()
 
-            if researchers.is_valid():
-                researchers.instance = self.object
-                researchers.save()
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
             return super(ProjectResearcherCreateView, self).form_valid(form)
 
     def get_success_url(self):
