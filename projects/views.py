@@ -23,7 +23,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
 class ProjectResearcherCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['name', 'description']
+    fields = ['name', 'description', 'instructions']
     template_name = 'projects/project_researchers_create.html'
     success_url = reverse_lazy('project_list')
 
