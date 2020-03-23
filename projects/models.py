@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from accounts.models import CustomUser
 
 
@@ -12,6 +13,7 @@ class Project(models.Model):
     has_grant_application = models.BooleanField(default=False)
     grant_agency = models.CharField(max_length=255, blank=True)
     grant_release_date = models.DateField(null=True, blank=True)
+    created_at=models.DateTimeField(default=now, blank=True)
 
     def __str__(self):
         return f'name: {self.name}'

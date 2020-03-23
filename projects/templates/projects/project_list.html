@@ -3,7 +3,7 @@
 {% block content %}
   <h2>Projects <a class="btn btn-primary" href="{% url 'projects:project_create' %}">New Project</a></h2>
   <table class="table">
-    <thead><tr><th>Name</th><th>Collaborators</th><th>Instructions</th></tr></thead>
+    <thead><tr><th>Name</th><th>Collaborators</th><th>Instructions</th><th>Creation Date</th></tr></thead>
     <tbody>
     {% for project in object_list %}
       <tr>
@@ -16,6 +16,9 @@
         <td>
           <a href="{{ project.instructions.url }}" class="btn btn-primary btn-sm" target="_blank">Download</a>
         </td>
+          <td>
+              {{ project.created_at }}
+          </td>
       </tr>
     {% endfor %}
     </tbody>
